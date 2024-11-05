@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helios VibeChord Interface</title>
+</head>
+<body>
+    <h1>Music Bot Controls</h1>
+    
+    <button onclick="sendCommand('!join')">Join Voice Channel</button>
+    <button onclick="sendCommand('!disconnect')">Disconnect</button>
+    <button onclick="sendCommand('!play')">Play</button>
+    <button onclick="sendCommand('!pause')">Pause</button>
+    <button onclick="sendCommand('!resume')">Resume</button>
+    <button onclick="sendCommand('!stop')">Stop</button>
+    <button onclick="sendCommand('!skip')">Skip</button>
+    <button onclick="sendCommand('!queue')">Show Queue</button>
+    <button onclick="sendCommand('!help')">Help</button>
+
+    <script>
+        function sendCommand(command) {
+            fetch("/send_command", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "command=" + encodeURIComponent(command)
+            })
+            .then(response => response.json())
+            .then(data => alert("Command sent: " + data.command))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
